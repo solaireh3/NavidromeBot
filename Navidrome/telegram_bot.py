@@ -60,7 +60,6 @@ toggle_backup = restricted(toggle_backup)
 toggle_time_user = restricted(toggle_time_user)
 
 def main():
-    print(TELEGRAM_BOT_TOKEN)
     dispatcher = ApplicationBuilder().connect_timeout(10).read_timeout(10).write_timeout(10).token(TELEGRAM_BOT_TOKEN).rate_limiter(AIORateLimiter(overall_max_rate=0, overall_time_period=0, group_max_rate=0, group_time_period=0, max_retries=5)).build()
     
     # 添加广播消息处理器
