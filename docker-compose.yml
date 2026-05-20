@@ -1,17 +1,17 @@
 version: '3.8'
 
 services:
-  # mongo:
-  #   image: mongo:5.0
-  #   container_name: mongo
-  #   restart: always
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: bot
-  #     MONGO_INITDB_ROOT_PASSWORD: botpwd
-  #   volumes:
-  #     - ./db:/data/db
-  #   ports:
-  #     - 27017:27017
+  mongo:
+    image: mongo:5.0
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: bot       # 修改为自定义用户名，需与 config.json 中 DB_URL 保持一致
+      MONGO_INITDB_ROOT_PASSWORD: botpwd    # 修改为强密码，需与 config.json 中 DB_URL 保持一致
+    volumes:
+      - ./db:/data/db
+    ports:
+      - 27017:27017   # 如不需要从外部访问 MongoDB，可删除此行或改为 127.0.0.1:27017:27017
   navidrome_bot:
     image: dddddluo/navidrome_bot:latest
     container_name: navidrome_bot
@@ -19,7 +19,8 @@ services:
       - ./Navidrome/config.json:/app/Navidrome/config.json
       - ./Navidrome/db_backup:/app/Navidrome/db_backup
       - ./Navidrome/logo.jpg:/app/Navidrome/logo.jpg
+      - ./Navidrome/logs:/app/Navidrome/logs
     restart: always
-    # depends_on:
-    #   - mongo
+    depends_on:
+      - mongo
 
